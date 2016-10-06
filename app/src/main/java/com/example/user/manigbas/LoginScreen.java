@@ -1,76 +1,101 @@
 package com.example.user.manigbas;
+
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import java.util.regex.Pattern;
 
-public class LoginScreen extends AppCompatActivity {
+
+public class LoginScreen extends Activity{
+
+    private Button loginBtn;
+    private Login login;
+    private EditText emailEdtTxt;
+    private EditText passwordEdtTxt;
+    private TextView emailTxtView;
+    private TextView passwordTxtView;
+    private TextView toggleTxt;
+    private TextView signUpLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        final EditText emailValidate = (EditText) findViewById(R.id.emailEditText);
-        final EditText passwordFormat = (EditText) findViewById(R.id.passwordEditTxt);
-        final Button button = (Button) findViewById(R.id.loginBtn);
-        final TextView showBtn = (TextView) findViewById(R.id.toggleTxt);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String email = emailValidate.getText().toString();
-                final String password = passwordFormat.getText().toString();
-                // push 10.4.2016
-                if (validate(email) && password.length() >= 8) {
-                    Toast.makeText(getApplicationContext(), "Login Successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginScreen.this, ontouch.class);
+
+        // UsersDataSource usersDataSource = new UsersDataSource(getApplicationContext());
+        // usersDataSource.createDatabase();
+
+        loginBtn = (Button)findViewById(R.id.loginBtn);
+        emailEdtTxt = (EditText)findViewById(R.id.emailEditTxt);
+        passwordEdtTxt = (EditText)findViewById(R.id.passwordEditTxt);
+        emailTxtView = (TextView)findViewById(R.id.emailTextView);
+        passwordTxtView = (TextView)findViewById(R.id.passwordTextView);
+        toggleTxt = (TextView)findViewById(R.id.toggleTxt);
+        signUpLink = (TextView)findViewById(R.id.signUpTxt);
+
+        loginBtn.setOnClickListener(new BtnListener());
+        emailEdtTxt.setOnTouchListener(new ETextListener());
+        passwordEdtTxt.setOnTouchListener(new ETextListener());
+        toggleTxt.setOnTouchListener(new ETextListener());
+        signUpLink.setOnTouchListener(new ETextListener());
+    }
+
+    private class BtnListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v){
+
+            if(v.equals(loginBtn)){
+
+                login = new Login(getApplicationContext(), emailTxtView, passwordTxtView);
+
+                boolean isLoginValid = login.validateLogin(emailEdtTxt, passwordEdtTxt);
+
+                if(isLoginValid){
+                    Intent intent = new Intent(LoginScreen.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
-                if (!validate(email) || password.length() < 8) {
-                    if(!validate(email)){
-                        Toast.makeText(getApplicationContext(), "Invalid E-mail Address!", Toast.LENGTH_SHORT).show();
-                    }
-                    if(password.length()<8){
-                        Toast.makeText(getApplicationContext(), "Invalid Password!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if (!validate(email) && password.length() < 8)
-                    Toast.makeText(getApplicationContext(), "Invalid E-Mail or Password!", Toast.LENGTH_SHORT).show();
             }
-        });
-        showBtn.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View v, MotionEvent event){
-                switch ( event.getAction() ) {
+        }
+    }
 
+    private class ETextListener implements View.OnTouchListener{
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (v.equals(emailEdtTxt))
+                emailTxtView.setText("");
+
+
+            if (v.equals(passwordEdtTxt))
+                passwordTxtView.setText("");
+
+
+            if(v.equals(toggleTxt)) {
+
+                switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        EditText pText=(EditText)findViewById(R.id.passwordEditTxt);
-                        pText.setInputType(InputType.TYPE_CLASS_TEXT);
-                        break;
+                        passwordEdtTxt.setTransformationMethod(null);
+                        passwordEdtTxt.setSelection(passwordEdtTxt.getText().length());
+                        return true;
                     case MotionEvent.ACTION_UP:
-                        EditText aText=(EditText)findViewById(R.id.passwordEditTxt);
-                        aText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        break;
+                        passwordEdtTxt.setTransformationMethod(new PasswordTransformationMethod());
+                        passwordEdtTxt.setSelection(passwordEdtTxt.getText().length());
+                        return false;
                 }
-                return true;
             }
 
-        });
-    }
-    private boolean validate(String email){
+            if(v.equals(signUpLink)){
+                Intent intent = new Intent(LoginScreen.this, Registration.class);
+                startActivity(intent);
+            }
 
-        return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
+            return false;
+        }
     }
-
 }

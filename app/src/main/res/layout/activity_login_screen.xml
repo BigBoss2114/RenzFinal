@@ -4,74 +4,79 @@
     android:layout_height="match_parent"
     android:background="@drawable/login">
 
-    <RelativeLayout
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress|textWebEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailEditTxt"
+        android:padding="5dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textIsSelectable="false"
+        android:hint="E-mail"
+        android:background="#ffffff"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/emailTextView"
+        android:textColor="#fe0202"
+        android:layout_below="@+id/emailEditTxt"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/passwordEditTxt"
+        android:padding="5dp"
+        android:textIsSelectable="false"
+        android:hint="Password"
+        android:background="#ffffff"
+        android:inputType="textPassword"
+        android:layout_below="@+id/emailTextView"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_marginTop="35dp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress|textWebEmailAddress"
-            android:ems="10"
-            android:id="@+id/emailEditText"
-            android:padding="5dp"
-            android:textIsSelectable="false"
-            android:hint="E-mail"
-            android:background="#ffffff"
-            android:layout_above="@+id/passwordEditTxt"
-            android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/passwordTextView"
+        android:textColor="#fe0202"
+        android:layout_below="@+id/passwordEditTxt"
+        android:layout_alignParentLeft="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/emailTextView"
-            android:textColor="#fe0202"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="174dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/loginBtn"
+        android:layout_above="@+id/signUpTxt"
+        android:layout_alignStart="@+id/signUpTxt" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/passwordEditTxt"
-            android:padding="5dp"
-            android:textIsSelectable="false"
-            android:hint="Password"
-            android:background="#ffffff"
-            android:inputType="textPassword"
-            android:layout_alignBaseline="@+id/emailTextView"
-            android:layout_alignBottom="@+id/emailTextView"
-            android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show"
+        android:id="@+id/toggleTxt"
+        android:textSize="15dp"
+        android:textColor="#1afaba"
+        android:layout_below="@+id/passwordEditTxt"
+        android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/textView2"
-            android:textColor="#fe0202"
-            android:layout_below="@+id/toggleTxt"
-            android:layout_alignParentRight="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:id="@+id/loginBtn"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show"
-            android:id="@+id/toggleTxt"
-            android:textSize="15dp"
-            android:textColor="#1afaba"
-            android:layout_below="@+id/passwordEditTxt"
-            android:layout_alignParentStart="true" />
-    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Sign Up"
+        android:id="@+id/signUpTxt"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
+
